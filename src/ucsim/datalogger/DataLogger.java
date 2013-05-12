@@ -3,6 +3,8 @@ package ucsim.datalogger;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import ucsim.datalogger.ucsimevent.UCSimEvent;
 import ucsim.packet.Packet;
 import ucsim.world.World;
@@ -15,6 +17,8 @@ public class DataLogger {
 	private   BufferedWriter 	file;
 	
 	protected boolean 			enabled		= false;
+	
+	protected ArrayList<UCSimEvent> eventList = new ArrayList<UCSimEvent>();
 	
 	public DataLogger(String fileName, Boolean enabled){
 		this.enabled = enabled;
@@ -39,12 +43,9 @@ public class DataLogger {
 	
 	public void logEvent(UCSimEvent e){
 		if(this.enabled){
-			try {
-				file.write(e.toString());
-				file.flush();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+			this.eventList.add(e);
+//				file.write(e.toString());
+//				file.flush();
 		}
 	}
 	
@@ -59,7 +60,14 @@ public class DataLogger {
 	
 	public void close(){
 		try {
-			this.file.write("\b]}");
+		    for(int i=0; i<this.eventList.size(); i++){
+		        UCSimEvent e = this.eventList.get(i);
+		        this.file.write(e.toString());
+		        if(i!=this.eventList.size()-1){
+		            this.file.write(",\n");
+		        }
+		    }
+			this.file.write("]}");
 			this.file.close();
 		} catch (IOException e) {
 			e.printStackTrace();

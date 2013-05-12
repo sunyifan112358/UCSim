@@ -1,13 +1,15 @@
 package ucsim.node.energymodel;
 
+import ucsim.packet.Packet;
+
 public class EnergyModule {
     private double energyConsumption = 0;
 
     private double listenEnergy = 0.02;
     private double receiveEnergy = 0.03;
-    private double transmitEnergy = 2;
+    private double transmitEnergy = Packet.startPower;
 
-    double packetPreambleTime = 0.1;
+    public static double packetPreambleTime = 0.1;
 
 
     public EnergyModule(){}

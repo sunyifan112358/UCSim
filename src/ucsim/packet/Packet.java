@@ -15,8 +15,8 @@ public class Packet implements Showable, Cloneable{
     protected   int         destination;
     protected   int         to;
 
-    protected   double      startPower          = 4;
-    protected   double      power               = this.startPower;
+    public static double    startPower          = 3.4;
+    protected   double      power               = Packet.startPower;
 
     protected   double      noise               = 1e-3;
     protected   double      interference        = 0;
@@ -88,7 +88,7 @@ public class Packet implements Showable, Cloneable{
 
     public void propagate(Node fromNode, Node toNode, World w) {
         double distanceAdvance = w.scheduler.getTimeAdvance()*w.propagationModel.getPropagationSpeed();
-        double distanceCoverage = this.getLength()/w.dataRate*w.propagationModel.getPropagationSpeed();
+        double distanceCoverage = this.getLength()/World.dataRate*w.propagationModel.getPropagationSpeed();
 
         double d = distance(fromNode, toNode);
 
@@ -99,7 +99,7 @@ public class Packet implements Showable, Cloneable{
         this.tailPos = this.headPos - scaledCoverage;
 
         if (!isHeadArrived()) {
-            this.setPower(this.startPower/w.propagationModel.attenuation(headPos*d));
+            this.setPower(Packet.startPower/w.propagationModel.attenuation(headPos*d));
         }
 
 
@@ -256,6 +256,16 @@ public class Packet implements Showable, Cloneable{
             color = color.darker();
         }
         return color;
+    }
+    
+    public Packet clone(){
+        Packet p = null;
+        try {
+            p =  (Packet) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return p;
     }
     
 

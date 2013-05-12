@@ -1,7 +1,10 @@
 package ucsim.node.mac.csmacamac;
 
 import java.util.Random;
+
+import ucsim.datalogger.ucsimevent.UCSimEvent;
 import ucsim.node.Node;
+import ucsim.node.mac.papermac.PaperMAC;
 import ucsim.node.mac.simplemac.SimpleMAC;
 import ucsim.packet.ControlPacket;
 import ucsim.packet.Packet;
@@ -351,12 +354,28 @@ public class CSMACAMAC extends SimpleMAC {
 	            this.isACK = false;
 	        }else{
 	            this.isACK = true;
+	            
+	            double energy = 0;
+	            for(int i=0; i<w.nodes.size(); i++){
+	                Node node = w.nodes.get(i);
+	                energy += node.energyModule.getEnergyConsumption();
+	            }
+	            UCSimEvent event = UCSimEvent.createUCSimEvent(
+	                    w.scheduler.getNowTime(), 
+	                    "Receive data", 
+	                    String.format("{\"data\":%d, \"energy\":%f}", 
+	                                p.getLength()-PaperMAC.headerSize,
+	                                energy
+	                            )
+	                );
+//	            n.dataLogger.logEvent(event);
+	            
+	            n.app.receivePacket(p, n, w);
 	        }
 	        
 	        this.setState(16);
 	        this.ift = this.defaultSIFT;
 	        
-	        n.app.receivePacket(p, n, w);
 	        
 	    }
 	}
@@ -400,7 +419,14 @@ public class CSMACAMAC extends SimpleMAC {
         if(p.getData().contains("Data")){
             this.receiveData(p, w, n);
         }
+        
         n.energyModule.receiveConsumeEnergy(p.getReceiveTime()-p.getSendTime());
+//        UCSimEvent event = UCSimEvent.createUCSimEvent(
+//                w.scheduler.getNowTime(), 
+//                "Energy Update", 
+//                String.format("{\"energy\":%f}", n.energyModule.getEnergyConsumption())
+//            );
+//        n.dataLogger.logEvent(event);
     }
 
 

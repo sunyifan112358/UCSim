@@ -2,6 +2,7 @@ package ucsim.node.mac.simplemac;
 
 import java.util.Random;
 
+import ucsim.datalogger.ucsimevent.UCSimEvent;
 import ucsim.node.Node;
 import ucsim.node.mac.MAC;
 import ucsim.packet.Packet;
@@ -83,11 +84,17 @@ public class SimpleMAC extends MAC {
     public void send(Packet p, World w, Node n) {
       this.isSending = true;
       try {
-        p.send(w);
-    } catch (CloneNotSupportedException e) {
-        e.printStackTrace();
-    }
-      n.energyModule.transmitConsumeEnergy(p.getLength(), w.dataRate);
+          p.send(w);
+      } catch (CloneNotSupportedException e) {
+          e.printStackTrace();
+      }
+      n.energyModule.transmitConsumeEnergy(p.getLength(), World.dataRate);
+//      UCSimEvent event = UCSimEvent.createUCSimEvent(
+//                  w.scheduler.getNowTime(), 
+//                  "Energy Update", 
+//                  String.format("{\"energy\":%f}", n.energyModule.getEnergyConsumption())
+//              );
+//      n.dataLogger.logEvent(event);
       
     }
     

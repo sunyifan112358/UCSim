@@ -7,6 +7,11 @@ import processing.core.PApplet;
 import ucsim.world.World;
 
 public class ControlPacket extends Packet {
+    
+    public static final int RTSSize = 160;
+    public static final int CTSSize = 80;
+    public static final int ACKSize = 80;
+    public static final int NAKSize = 80;
      
     public ControlPacket(String data, int source, int destination, int length, World w) {
         super(data, source, destination, length, w);

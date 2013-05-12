@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class LinkProfiler {
 	
-	public 	double 						estimatedBER = 0.1;
-	public  int 						fromId;
-	public 	int   						destinationId;
-	private ArrayList<PacketHistroy> 	packetHistroyList 
+	protected 	double 						estimatedBER = 0.1;
+	protected   int 						fromId;
+	protected 	int   						destinationId;
+	protected   ArrayList<PacketHistroy> 	packetHistroyList 
 								= new ArrayList<PacketHistroy>();
 	
-	private double runningFactor = 0.1;
+	private double runningFactor = 1;
 	
 	public LinkProfiler(int fromId, int destinationId){
 		this.fromId = fromId;
@@ -20,21 +20,23 @@ public class LinkProfiler {
 	
 	public void addPacketHistroy(int length, boolean isCorrect){
 		this.packetHistroyList.add(new PacketHistroy(length, isCorrect));
-		this.estimateBER();
+//		if(this.packetHistroyList.size()>20){
+//		    this.packetHistroyList.remove(0);
+//		    System.out.printf("Packet removed\n");
+//		}
 	}
 	
 	public void estimateBER(){
 //		int step = 500000;
 		double step = 1e-6;
 		double bestBER = 0;
-		System.out.printf("Step size: %f\n", step);
 		double tempBER = this.estimatedBER;
 		double lastLikelyhood = this.getLikelyhood(tempBER);
 		//search upwards
 		while(true){
 			tempBER += step;
 			double tempLikelyhood = this.getLikelyhood(tempBER);
-			if(tempLikelyhood<lastLikelyhood || tempBER>=0.5){
+			if(tempLikelyhood<lastLikelyhood || tempBER>0.5){
 				bestBER = tempBER-step;
 				tempBER -= step;
 				break;
@@ -46,7 +48,7 @@ public class LinkProfiler {
 		while(true){
 			tempBER -= step;
 			double tempLikelyhood = this.getLikelyhood(tempBER);
-			if(tempLikelyhood<lastLikelyhood || tempBER<=0){
+			if(tempLikelyhood<lastLikelyhood || tempBER<0){
 				bestBER = tempBER+step;
 				break;
 			}else{
@@ -60,6 +62,8 @@ public class LinkProfiler {
 		}else{
 			this.estimatedBER = (1-this.runningFactor)*this.estimatedBER + this.runningFactor*bestBER;
 		}
+		
+		
 		System.out.printf("From %d, To %d, best BER: %f, Estimated BER: %f\n",
 							this.fromId, 
 							this.destinationId, 
@@ -79,10 +83,6 @@ public class LinkProfiler {
 		}
 		return likely;
 	}
-	
-	private void optimizePacketSize(){
-		
-	}
 
 	
 	public String toLogString(){
@@ -95,4 +95,7 @@ public class LinkProfiler {
 		return logString.toString();
 	}
 
+	public boolean isPacketHistroyEmpty(){
+	    return this.packetHistroyList.isEmpty();
+	}
 }

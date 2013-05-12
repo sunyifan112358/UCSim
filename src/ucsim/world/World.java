@@ -7,6 +7,7 @@ import java.util.Random;
 import processing.core.*;
 import ucsim.coordinate.Coordinate;
 import ucsim.datalogger.DataLogger;
+import ucsim.datalogger.ucsimevent.UCSimEvent;
 import ucsim.graph.showable.Showable;
 import ucsim.graph.showable.ShowableInTimeDomain;
 import ucsim.graph.timedomaingraph.TimeDomainGraph;
@@ -27,13 +28,13 @@ public class World implements Runnable, Showable, ShowableInTimeDomain {
 	public    ArrayList<Packet> 		packets 	          = new ArrayList<Packet>();
 	private   double 					scale		          = 1;
 
-//	public    Scheduler                 scheduler             = Scheduler.createScheduler(Scheduler.REALTIME, 2000, 2000, 10);
-	public    Scheduler                 scheduler             = Scheduler.createScheduler(Scheduler.FIXEDINCREASEMENT, 20000, 20000, 1e-3);
-	public    DataLogger 				dataLogger            = new DataLogger("World.log", false);
+	public    Scheduler                 scheduler             = Scheduler.createScheduler(Scheduler.REALTIME, 2000, 2000, 1);
+//	public    Scheduler                 scheduler             = Scheduler.createScheduler(Scheduler.FIXEDINCREASEMENT, 20000, 20000, 1e-3);
+	public    DataLogger 				dataLogger            = new DataLogger("World.log", true);
 	public    PropagationModel 		    propagationModel      = new PropagationModel();
 
 	
-	public    double 					dataRate              =  800;
+	public    static final double 		dataRate              =  800;
 	
     public World(double x, double y, double z) {
         this.worldMax = new Coordinate(x, y, z);
@@ -191,10 +192,14 @@ public class World implements Runnable, Showable, ShowableInTimeDomain {
 		for (int i=0; i<nodes.size(); i++) {
 			Node n = (Node)nodes.get(i);
 			e += n.energyModule.getEnergyConsumption();
-			if(n.dataLogger!=null){
-				n.dataLogger.close();
-			}
+			n.dataLogger.close();
 		}
+		UCSimEvent event = UCSimEvent.createUCSimEvent(
+                    this.scheduler.getNowTime(), 
+                    "Total Evergy", 
+                    String.format("\"Energy\":%f", e)
+                );
+		this.dataLogger.logEvent(event);
 		this.dataLogger.close();
 	}
 

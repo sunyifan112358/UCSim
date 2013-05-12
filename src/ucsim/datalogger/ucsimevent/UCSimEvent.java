@@ -35,7 +35,7 @@ public class UCSimEvent {
 								"\"identifer\":\"%s\", " +
 								"\"whatHappened\":\"%s\"," +
 								"\"content\":%s" +
-								"},\n", 
+								"}", 
 								this.time, 
 								this.identifer, 
 								this.whatHappened,
