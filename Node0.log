@@ -1,8 +1,0 @@
-{"Events":[{"time":24.83943493, "identifer":"G", "whatHappened":"Estimated BER Updated","content":{"From":0,"To":1,"eBER":0.000001}
-},
-{"time":58.80552049, "identifer":"G", "whatHappened":"Estimated BER Updated","content":{"From":0,"To":1,"eBER":0.000238}
-},
-{"time":70.81378989, "identifer":"G", "whatHappened":"Estimated BER Updated","content":{"From":0,"To":1,"eBER":0.000146}
-},
-{"time":105.43581093, "identifer":"G", "whatHappened":"Estimated BER Updated","content":{"From":0,"To":1,"eBER":0.000118}
-}]}
