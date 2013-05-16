@@ -17,6 +17,11 @@
 */
 package ucsim.core.simulation;
 
+import ucsim.core.scheduler.Scheduler;
+import ucsim.core.world.World;
+import ucsim.visualization.PFrame;
+import ucsim.visualization.spacedomaingraph.SpaceDomainGraph;
+
 /**
  * Simulation - singleton 
  * @author yifan
@@ -45,8 +50,14 @@ public class Simulation {
      /**
      * Simulation start;
      */
-    private static void start(){
-        
+    public static void start(){
+        SpaceDomainGraph sdg = new SpaceDomainGraph();
+        @SuppressWarnings("unused")
+		PFrame sdg_frame = new PFrame(sdg);
+        while(true){
+        	Scheduler.update();
+        	World.getInstance().process();
+        }
     }   
     
 }

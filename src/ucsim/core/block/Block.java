@@ -1,5 +1,6 @@
 package ucsim.core.block;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import ucsim.core.block.pin.InputPin;
@@ -13,9 +14,14 @@ import ucsim.core.block.pin.OutputPin;
  * @author yifan
  *
  */
-abstract public class Block {
+abstract public class Block implements Serializable {
     
-    protected HashMap<String, InputPin> inputPins = new HashMap<String, InputPin>();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	protected HashMap<String, InputPin> inputPins = new HashMap<String, InputPin>();
     protected HashMap<String, OutputPin> outputPins = new HashMap<String, OutputPin>();
     
     /**

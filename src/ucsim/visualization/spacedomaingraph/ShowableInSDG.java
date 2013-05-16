@@ -16,35 +16,17 @@
   Public License along with this library
 */
 package ucsim.visualization.spacedomaingraph;
-
 import processing.core.PApplet;
-import ucsim.core.world.World;
 
 /**
- * Space domain graph, a processing window;
- * @author yifan
+ * 
+ * @author Yifan
  *
  */
-public class SpaceDomainGraph extends PApplet {
-
-    /**
-     * default serial ID
-     */
-    private static final long serialVersionUID = 1L;
-    
-    public void setup(){
-        size(800, 600, P3D);
-        smooth(2);
-        frameRate(30);
-        noCursor();
-    }
-    
-    public void draw(){
-    	beginCamera();
-        background(255);
-        lights();
-        World.getInstance().showInSDG(this);
-        endCamera();
-    }
-
+public interface ShowableInSDG {
+	/**
+	 * show in space domain graph
+	 * @param g graph for 
+	 */
+	public void showInSDG(PApplet g);
 }

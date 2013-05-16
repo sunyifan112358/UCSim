@@ -35,6 +35,11 @@ public class Channel extends Block{
     
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Constructor
      */
     public Channel() {

@@ -1,5 +1,7 @@
 package ucsim.core.block.pin;
 
+import java.io.Serializable;
+
 import ucsim.core.block.Block;
 
 /**
@@ -8,8 +10,12 @@ import ucsim.core.block.Block;
  * @author yifan
  * 
  */
-abstract public class Pin {
-    protected Block owner = null;
+abstract public class Pin implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected Block owner = null;
     private String name = "";
     
     /**

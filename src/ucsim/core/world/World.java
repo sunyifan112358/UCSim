@@ -20,21 +20,31 @@ package ucsim.core.world;
 import java.nio.channels.Channel;
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+
+import ucsim.core.block.Block;
 import ucsim.core.coordinate.Coordinate;
 import ucsim.core.node.Node;
+import ucsim.visualization.spacedomaingraph.ShowableInSDG;
 
 /**
  * World, the stage where the nodes packets in.
  * Singleton pattern
+ * The largest block that every sub-block lies in
  * @author yifan
  *
  */
-public class World {
+public class World extends Block implements ShowableInSDG{
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	Coordinate bounday = null;
 	
-    private ArrayList<Node> nodes = new ArrayList<Node>();
-    private ArrayList<Channel> channels = new ArrayList<Channel>();
+    protected ArrayList<Node> nodes = new ArrayList<Node>();
+    protected ArrayList<Channel> channels = new ArrayList<Channel>();
     
 	
     /**
@@ -60,5 +70,64 @@ public class World {
 		World.world.bounday = new Coordinate(x, y, z);
 	}
 	
+	/**
+	 * process 
+	 */
+	public void process(){
+		
+	}
 	
+	/**
+	 * set the camera goes with mouse
+	 * @param g
+	 */
+	public static void setCamera(PApplet g){
+		World w = World.getInstance();
+		g.camera(
+				(float)((g.mouseX*1.0/g.width)*w.bounday.getX()),
+				(float)((g.mouseY*1.0/g.height)*w.bounday.getY()),
+				(float)(2.0*w.bounday.getZ()),
+				(float)(w.bounday.getX()/2.0), 
+				(float)(w.bounday.getY()/2.0), 
+				(float)(w.bounday.getZ()/2.0),
+				(float)0.0, (float)1.0, (float)0.0
+			);
+	}
+
+	/* (non-Javadoc)
+	 * @see ucsim.visualization.spacedomaingraph.ShowableInSDG#showInSDG(processing.core.PApplet)
+	 */
+	@Override
+	public void showInSDG(PApplet g) {
+		World.setCamera(g);
+		g.noFill();
+		g.stroke(0, 50);
+		g.pushMatrix();
+			g.translate(
+						(float)(this.bounday.getX()/2.0),
+						(float)(this.bounday.getY()/2.0),
+						(float)(this.bounday.getZ()/2.0)
+					);
+			g.box(
+						(float)(this.bounday.getX()),
+						(float)(this.bounday.getY()),
+						(float)(this.bounday.getZ())
+				  );
+		g.popMatrix();
+		for(int i=0; i<nodes.size(); i++){
+			Node n = nodes.get(i);
+			n.showInSDG(g);
+		}
+		
+	}
+	
+	/**
+	 * add node to world
+	 * @param n node to be added
+	 */
+	public static void addNode(Node n){
+		World w = World.getInstance();
+		w.nodes.add(n);
+	}
+
 }

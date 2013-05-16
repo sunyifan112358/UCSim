@@ -17,6 +17,10 @@
 */
 package ucsim;
 
+import ucsim.core.node.Node;
+import ucsim.core.node.protocol.Protocol;
+import ucsim.core.node.protocol.datalinkprotocol.DatalinkProtocol;
+import ucsim.core.simulation.Simulation;
 import ucsim.core.world.World;
 
 
@@ -33,6 +37,21 @@ public class UCSim {
      */
     public static void main(String[] args) {
         World.setSize(1500, 1500, 1500);
+        
+        Node n = new Node();
+        n.setPosition(100, 100, 100);
+        Protocol p = new DatalinkProtocol();
+        n.addProtocol(p, null, null);
+        n.assignPins(p);
+        
+        Node n2 = Node.cloneNode(n);
+        n2.setPosition(200, 200, 200);
+        
+        World.addNode(n);
+        World.addNode(n2);
+        
+        
+        Simulation.start();
         
     }
 

@@ -24,19 +24,26 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import processing.core.PApplet;
+
 import ucsim.core.block.Block;
 import ucsim.core.block.pin.InputPin;
 import ucsim.core.block.pin.OutputPin;
+import ucsim.core.coordinate.Coordinate;
 import ucsim.core.node.protocol.Protocol;
+import ucsim.core.world.World;
 import ucsim.core.world.channel.Channel;
+import ucsim.visualization.spacedomaingraph.ShowableInSDG;
 
 /**
  * Network node extends block
  * @author yifan
  *
  */
-public class Node extends Block implements Serializable{
+public class Node extends Block implements Serializable, ShowableInSDG{
     
+	Coordinate position = new Coordinate(0, 0, 0);
+	
     /**
      * default serialVersionUID
      */
@@ -80,6 +87,17 @@ public class Node extends Block implements Serializable{
         
         return node;
         
+    }
+    
+    /**
+     * Set the position of the nodes
+     * @param x x position
+     * @param y y position
+     * @param z z position
+     */
+    public void setPosition(double x, double y, double z){
+    	this.position = new Coordinate(x, y, z);
+    	
     }
 
     /* (non-Javadoc)
@@ -144,6 +162,27 @@ public class Node extends Block implements Serializable{
     public void registerNode(Channel c){
        c.registerNode(this);
     }
+
+	/* (non-Javadoc)
+	 * @see ucsim.visualization.spacedomaingraph.ShowableInSDG#showInSDG(processing.core.PApplet)
+	 */
+	@Override
+	public void showInSDG(PApplet g) {
+		double size = 20;
+		World.setCamera(g);
+		g.noStroke();
+		g.fill(255);
+		g.pushMatrix();
+			g.translate(
+							(float)this.position.getX(), 
+							(float)this.position.getY(), 
+							(float)this.position.getZ()
+						);
+			
+			g.sphere((float)size);
+		g.popMatrix();
+		
+	}
    
 
 }

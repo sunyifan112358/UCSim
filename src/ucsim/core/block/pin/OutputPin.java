@@ -27,7 +27,11 @@ import ucsim.core.block.Connector;
  */
 public class OutputPin extends Pin {
     
-    private Connector connector = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Connector connector = null;
    
     /**
      * Constructor for output pin

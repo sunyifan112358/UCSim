@@ -12,6 +12,10 @@ import ucsim.core.block.Block;
  */
 public class InputPin extends Pin {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Input FIFO Buffer, arrived data is stored before processed
      */
     private ArrayList<Object> InputBuffer = new ArrayList<Object>();
