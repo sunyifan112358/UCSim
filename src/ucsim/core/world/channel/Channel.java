@@ -17,10 +17,6 @@
 */
 package ucsim.core.world.channel;
 
-import java.util.ArrayList;
-
-
-
 import ucsim.core.node.Node;
 import ucsim.core.block.Block;
 import ucsim.core.block.pin.InputPin;
@@ -37,14 +33,12 @@ import ucsim.core.block.pin.OutputPin;
  */
 public class Channel extends Block{
     
-    private ArrayList<OutputPin> outputPins = new ArrayList<OutputPin>();
-    InputPin  inputPin  = new InputPin(this);
 
     /**
      * Constructor
      */
     public Channel() {
-        
+        this.registerInputPin(new InputPin(this, "intoChannel"));
     }
 
     /* (non-Javadoc)
@@ -63,11 +57,10 @@ public class Channel extends Block{
     public void registerNode(
                                  Node n      
                              ){
-        OutputPin op = new OutputPin(this);
-        op.connect(n.getFromChannel());
-        this.outputPins.add(op);
-        n.getToChannel().connect(this.inputPin);
-        
+        OutputPin op = new OutputPin(this, String.format("toNode%d", this.outputPins.size()));
+        op.connect(n.getInputPin("intoChannel"));
+        this.registerOutputPin(op);
+        n.getOutputPin("toChannel").connect(this.getInputPin("intoChannel"));       
     }
     
 

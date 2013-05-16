@@ -145,37 +145,5 @@ public class Node extends Block implements Serializable{
        c.registerNode(this);
     }
    
-    
-    
-    /***************************************
-     *  getter and setter
-     **************************************/
 
-    /**
-     * @return the toChannel
-     */
-    public OutputPin getToChannel() {
-        return toChannel;
-    }
-
-    /**
-     * @param toChannel the toChannel to set
-     */
-    public void setToChannel(OutputPin toChannel) {
-        this.toChannel = toChannel;
-    }
-
-    /**
-     * @return the fromChannel
-     */
-    public InputPin getFromChannel() {
-        return fromChannel;
-    }
-
-    /**
-     * @param fromChannel the fromChannel to set
-     */
-    public void setFromChannel(InputPin fromChannel) {
-        this.fromChannel = fromChannel;
-    }
 }

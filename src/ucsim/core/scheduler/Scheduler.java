@@ -15,38 +15,24 @@
   You should have received a copy of the GNU Lesser General
   Public License along with this library
 */
-package ucsim.core.simulation;
+package ucsim.core.scheduler;
 
 /**
- * Simulation - singleton 
- * @author yifan
+ * 
+ * 
+ * @author Yifan
  *
  */
-public class Simulation {
+public class Scheduler {
 	
+	private static Scheduler scheduler = null;
 	
-	
-	private static Simulation simulation = new Simulation();
 	/**
-	 * private constructor
+	 * default constructor for scheduler
 	 */
-	private Simulation(){
+	private Scheduler(){
 		
 	}
 	
-	/**
-	 * get instance of Simulation
-	 * @return instance of simulation
-	 */
-	public static Simulation getInstance(){
-		return Simulation.simulation;
-	}
 	
-     /**
-     * Simulation start;
-     */
-    private static void start(){
-        
-    }   
-    
 }

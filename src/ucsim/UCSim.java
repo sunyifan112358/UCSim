@@ -15,7 +15,10 @@
   You should have received a copy of the GNU Lesser General
   Public License along with this library
 */
-package ucsim.core;
+package ucsim;
+
+import ucsim.core.world.World;
+
 
 /**
  * program entrance of UCSim
@@ -29,6 +32,7 @@ public class UCSim {
      * @param args arguments, not required
      */
     public static void main(String[] args) {
+        World.setSize(1500, 1500, 1500);
         
     }
 
