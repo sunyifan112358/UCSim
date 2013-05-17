@@ -1,5 +1,5 @@
 /*
-s  Part of the UCSim project
+  Part of the UCSim project
 
   Copyright (c) 2013-13 Yifan Sun
 
@@ -15,20 +15,38 @@ s  Part of the UCSim project
   You should have received a copy of the GNU Lesser General
   Public License along with this library
 */
-package ucsim.core.node.application;
+package ucsim.core.math;
 
-import ucsim.core.block.Block;
+import java.util.Random;
 
 /**
+ * random variable generator 
  * @author Yifan
  *
  */
-public abstract class Application extends Block {
-
+public class Distribution extends Random {
+	
 	/**
-	 * default serial id
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
+	/**
+	 * @param lambda
+	 * @return random variable follows poisson distribution
+	 */
+	public int nextPoisson(double lambda) {
+		double elambda = Math.exp(-1*lambda);
+		double product = 1;
+		int count =  0;
+		int result=0;
+		while (product >= elambda) {
+			product *= nextDouble();
+			result = count;
+			count++; // keep result one behind
+			}
+		return result;
+	}
+
+
 }

@@ -112,13 +112,13 @@ abstract public class Protocol extends Block{
 	 * Process a single packet from the lower layer
 	 * @param p packet to be processed
 	 */
-	protected void processOnePacketFromLowerLayer(Packet p) {}
+	protected abstract void processOnePacketFromLowerLayer(Packet p);
 	
 	/**
 	 * Process a single packet from the higher layer
 	 * @param p packet to be processed
 	 */
-	protected void processOnePacketFromHigherLayer(Packet p) {}
+	protected abstract void processOnePacketFromHigherLayer(Packet p);
 
 
 }

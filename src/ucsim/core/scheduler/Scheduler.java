@@ -54,16 +54,18 @@ public class Scheduler {
 	
 	/**
 	 * Define the scheduler type
-	 * @param type
+	 * @param scheduler scheduler to be used
 	 */
-	public static void defineScheduler(int type){
-		switch(type){
-		case Scheduler.REALTIME_SCHEDULER:
-			break;
-		case Scheduler.EVENTDRIVEN_SCHEDULER:
-			break;
-		default:
-			break;	
+	public static void defineScheduler(Scheduler scheduler){
+		if(Scheduler.scheduler!=null){
+			try{
+				Exception e = new Exception("Cannot define another scheduer");
+				throw e;
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		}else{
+			Scheduler.scheduler = scheduler;
 		}
 	}
 	
@@ -108,6 +110,16 @@ public class Scheduler {
 		}else{
 			s.isRunning = true;
 		}
+	}
+	
+	/**
+	 * get time difference between last tick and this one
+	 * @return timeAdvance
+	 */
+	public static double getTimeAdvance(){
+		Scheduler s = Scheduler.getInstance();
+		return s.timeAdvance;
+		
 	}
 
 }

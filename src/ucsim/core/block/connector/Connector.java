@@ -15,7 +15,9 @@
   You should have received a copy of the GNU Lesser General
   Public License along with this library
 */
-package ucsim.core.block;
+package ucsim.core.block.connector;
+
+import java.util.ArrayList;
 
 import ucsim.core.block.pin.InputPin;
 import ucsim.core.block.pin.OutputPin;
@@ -44,16 +46,14 @@ public class Connector{
     }
 
     /**
-     * Output pin call this method to transmit data to input pin
-     * @param data data to be transmitted
+     * deliver all the data from output pin to input pin
      */
-    public void trasmit(Object data){
-        try{
-            this.input.input(data);
-        }catch(Exception e){
-            System.out.printf("Error in trasmission: can not cast data type");
-            e.printStackTrace();
-        }
+    public void trasmit(){
+    	ArrayList<Object> buf = this.output.getBuffer();
+    	for(int i=0; i<buf.size(); i++){
+    		Object o = buf.get(i);
+    		this.input.input(o);
+    	}
     }
 
     /**
@@ -68,6 +68,23 @@ public class Connector{
      */
     public void setOutput(OutputPin output) {
         this.output = output;
+    }
+    
+    /**
+     * clear the buffer of output pin
+     */
+    public void clear(){
+    	this.output.clearBuffer();
+    }
+    
+    /**
+     * Connect output pin and input pin
+     * @param op
+     * @param ip
+     */
+    public static void Connect(OutputPin op, InputPin ip){
+    	Connector c = new Connector(op, ip);
+    	ConnectorManager.addConnector(c);
     }
     
 }

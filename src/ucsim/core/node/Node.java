@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 
 import ucsim.core.block.Block;
+import ucsim.core.block.connector.Connector;
 import ucsim.core.block.pin.InputPin;
 import ucsim.core.block.pin.OutputPin;
 import ucsim.core.coordinate.Coordinate;
@@ -125,21 +126,21 @@ public class Node extends Block implements Serializable, ShowableInSDG{
                             ){
         this.protocolStack.add(p);
         if(pBeneath!=null){
-            Block.connectPins(
+            Connector.Connect(
                                 p.getOutputPin("toLower"), 
                                 pBeneath.getInputPin("fromHigher")
                              );
-            Block.connectPins(
+            Connector.Connect(
                                 pBeneath.getOutputPin("toHigher"), 
                                 p.getInputPin("fromLower")
                              );
         }
         if(pAbove!=null){
-            Block.connectPins(
+        	Connector.Connect(
                                 p.getOutputPin("toHigher"), 
                                 pAbove.getInputPin("fromLower")
                              );  
-            Block.connectPins(
+        	Connector.Connect(
                                 pAbove.getOutputPin("toLower"), 
                                 p.getInputPin("fromHigher")
                              );

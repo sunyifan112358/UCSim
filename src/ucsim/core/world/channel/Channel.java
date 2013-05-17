@@ -19,6 +19,7 @@ package ucsim.core.world.channel;
 
 import ucsim.core.node.Node;
 import ucsim.core.block.Block;
+import ucsim.core.block.connector.Connector;
 import ucsim.core.block.pin.InputPin;
 import ucsim.core.block.pin.OutputPin;
 
@@ -63,9 +64,9 @@ public class Channel extends Block{
                                  Node n      
                              ){
         OutputPin op = new OutputPin(this, String.format("toNode%d", this.outputPins.size()));
-        op.connect(n.getInputPin("intoChannel"));
+        Connector.Connect(op, n.getInputPin("intoChannel"));
         this.registerOutputPin(op);
-        n.getOutputPin("toChannel").connect(this.getInputPin("intoChannel"));       
+        Connector.Connect(n.getOutputPin("toChannel"), this.getInputPin("intoChannel"));      
     }
     
 

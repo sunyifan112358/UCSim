@@ -67,12 +67,4 @@ abstract public class Block implements Serializable {
         return p;
     }
     
-    /**
-     * An easier way to connect between 2 nodes
-     * @param op output pin
-     * @param ip input pin
-     */
-    public static void connectPins(OutputPin op, InputPin ip){
-        op.connect(ip);
-    }
 }

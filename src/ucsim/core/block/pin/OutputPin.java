@@ -18,7 +18,6 @@
 package ucsim.core.block.pin;
 
 import ucsim.core.block.Block;
-import ucsim.core.block.Connector;
 
 /**
  * class for output pins
@@ -31,7 +30,8 @@ public class OutputPin extends Pin {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Connector connector = null;
+	
+	
    
     /**
      * Constructor for output pin
@@ -42,23 +42,16 @@ public class OutputPin extends Pin {
         super(owner, name);
     }
     
-    /**
-     * connect it with an input pin
-     * @param inputPin
-     */
-    public void connect(InputPin inputPin){
-        this.connector = (new Connector(this, inputPin));
-    }
     
     /**
      * output data to connector
      * @param data
      */
     public void output(Object data){
-        if(this.connector!=null){
-            this.connector.trasmit(data);
-        }
+        this.buffer.add(data);
     }
+    
+    
     
     
     

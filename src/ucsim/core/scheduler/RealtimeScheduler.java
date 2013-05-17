@@ -30,7 +30,10 @@ public class RealtimeScheduler extends Scheduler {
 	
 	
 	
-	protected RealtimeScheduler(){
+	/**
+	 * Constructor of realtimeScheduler
+	 */
+	public RealtimeScheduler(){
 		
 	}
 	

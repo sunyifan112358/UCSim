@@ -17,6 +17,7 @@
 */
 package ucsim.core.simulation;
 
+import ucsim.core.block.connector.ConnectorManager;
 import ucsim.core.scheduler.Scheduler;
 import ucsim.core.world.World;
 import ucsim.visualization.PFrame;
@@ -57,6 +58,7 @@ public class Simulation {
         while(true){
         	Scheduler.update();
         	World.getInstance().process();
+        	ConnectorManager.getInstance().process();
         }
     }   
     

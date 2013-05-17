@@ -20,6 +20,8 @@ package ucsim;
 import ucsim.core.node.Node;
 import ucsim.core.node.protocol.Protocol;
 import ucsim.core.node.protocol.datalinkprotocol.DatalinkProtocol;
+import ucsim.core.scheduler.RealtimeScheduler;
+import ucsim.core.scheduler.Scheduler;
 import ucsim.core.simulation.Simulation;
 import ucsim.core.world.World;
 
@@ -37,6 +39,8 @@ public class UCSim {
      */
     public static void main(String[] args) {
         World.setSize(1500, 1500, 1500);
+        
+        Scheduler.defineScheduler(new RealtimeScheduler());
         
         Node n = new Node();
         n.setPosition(100, 100, 100);
